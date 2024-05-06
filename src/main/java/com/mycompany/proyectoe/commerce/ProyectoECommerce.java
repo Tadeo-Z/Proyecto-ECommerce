@@ -14,7 +14,7 @@ public class ProyectoECommerce {
      * @param args  
      */
     public static void main(String[] args) {
-
+        System.out.println("Esto es un mensaje de prueba jaja salu3");
         Conexion conex = new Conexion();
 
         conex.getConexion();

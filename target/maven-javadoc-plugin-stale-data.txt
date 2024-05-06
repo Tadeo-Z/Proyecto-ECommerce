@@ -1,0 +1,55 @@
+@options
+@packages
+-classpath
+'C:/Users/yalam/.m2/repository/mysql/mysql-connector-java/8.0.23/mysql-connector-java-8.0.23.jar;C:/Users/yalam/.m2/repository/com/google/protobuf/protobuf-java/3.11.4/protobuf-java-3.11.4.jar'
+-encoding
+'UTF-8'
+-protected
+-source
+'17'
+-sourcepath
+'C:/Users/yalam/Documents/NetBeansProjects/Proyecto-ECommerce-main/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2023. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/yalam/Documents/NetBeansProjects/Proyecto-ECommerce-main/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'ProyectoE-Commerce 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'ProyectoE-Commerce 1.0-SNAPSHOT API'
+com.mycompany.proyectoe.commerce
+entidades
+Interfaz
+negocio
+persistencia
+servicio
+C:\Users\yalam\.m2\repository\mysql\mysql-connector-java\8.0.23\mysql-connector-java-8.0.23.jar = 1701146371919
+C:\Users\yalam\.m2\repository\com\google\protobuf\protobuf-java\3.11.4\protobuf-java-3.11.4.jar = 1699584626722
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\src\main\java = 1695605577000
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\allclasses-index.html = 1701802479750
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\allpackages-index.html = 1701802479756
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\copy.svg = 1701802479822
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\element-list = 1701802479437
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\help-doc.html = 1701802479812
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\index-all.html = 1701802479801
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\index.html = 1701802479719
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\member-search-index.js = 1701802479772
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\module-search-index.js = 1701802479759
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\overview-summary.html = 1701802479807
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\overview-tree.html = 1701802479713
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\package-search-index.js = 1701802479765
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\script.js = 1701802479819
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\search-page.js = 1701802479830
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\search.html = 1701802479804
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\search.js = 1701802479827
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\serialized-form.html = 1701802479561
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\stylesheet.css = 1701802479816
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\tag-search-index.js = 1701802479774
+C:\Users\yalam\Documents\NetBeansProjects\Proyecto-ECommerce-main\target\site\apidocs\type-search-index.js = 1701802479768

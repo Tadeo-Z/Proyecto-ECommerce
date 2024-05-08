@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 /**
  *
-* @author yalam
+ * @author yalam
  */
 public class Usuarios {
 
@@ -39,16 +39,15 @@ public class Usuarios {
      * va a registrar.
      */
     public void registrarUsuario(Usuario usuario) {
-
+        //Si el correo y el telefono son validos, continuar con la operaion
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-
         usuarioDAO.registrar(usuario);
-
     }
 
-    
     /**
-     * Método eliminarUsuario que recibe como parámetro un usuario y es eliminado de la base de datos
+     * Método eliminarUsuario que recibe como parámetro un usuario y es
+     * eliminado de la base de datos
+     *
      * @param usuario el usuario a eliminar
      */
     public boolean eliminarUsuario(Usuario usuario) {
@@ -58,9 +57,11 @@ public class Usuarios {
         return usuarioDAO.eliminar(usuario);
 
     }
-    
+
     /**
-     * Método actualizarUsuario que recibe como parámetro un usuario y actualiza sus datos en la base de datos
+     * Método actualizarUsuario que recibe como parámetro un usuario y actualiza
+     * sus datos en la base de datos
+     *
      * @param usuario el usuario a actualizar sus datos
      */
     public boolean actualizarUsuario(Usuario usuario) {
@@ -71,7 +72,6 @@ public class Usuarios {
 
     }
 
-    
     /**
      * Valida si una contraseña cumple con los requisitos de complejidad
      * establecidos.

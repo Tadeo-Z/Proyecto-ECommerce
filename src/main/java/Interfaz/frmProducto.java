@@ -3,7 +3,6 @@ package Interfaz;
 import entidades.Producto;
 import entidades.Usuario;
 import entidades.Carrito;
-import negocio.Productos;
 import static java.awt.image.ImageObserver.HEIGHT;
 import java.util.List;
 import java.util.ArrayList;
@@ -22,15 +21,13 @@ public class frmProducto extends javax.swing.JFrame {
     private Usuario usuario; //Objeto usuario que te traes desde la ventana de LogIn para utilizarlo en otros frames como el frmProducto o en frmPedidos
     private Carrito carrito = new Carrito();
 
-    
-    
     /**
      * Contructor frmProducto que inicializa los componentes de la ventana
      */
-    public frmProducto(){
+    public frmProducto() {
         initComponents();
     }
-    
+
     /**
      * Constructor frmProducto que inicializa los componentes de la ventana e
      * inicializa el usuario con el que se inició sesión
@@ -54,7 +51,7 @@ public class frmProducto extends javax.swing.JFrame {
         modelo = new TMProducto(productos);
 
         jTable1.setModel(modelo);
-        
+
         textoNombre.setText(usuario.getEmail());
 
     }
@@ -80,6 +77,7 @@ public class frmProducto extends javax.swing.JFrame {
         textoNombre = new javax.swing.JLabel();
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        botonCerrarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -156,6 +154,16 @@ public class frmProducto extends javax.swing.JFrame {
             }
         });
 
+        botonCerrarSesion.setBackground(new java.awt.Color(255, 51, 51));
+        botonCerrarSesion.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        botonCerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
+        botonCerrarSesion.setText("Cerrar sesión");
+        botonCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCerrarSesionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -168,12 +176,15 @@ public class frmProducto extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoTextoIdProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(botonAgregar)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(botonCarrito)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botonPedidos)
-                        .addGap(146, 146, 146)
-                        .addComponent(botonCarrito)))
+                        .addGap(174, 174, 174)
+                        .addComponent(botonCerrarSesion)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
@@ -187,11 +198,6 @@ public class frmProducto extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(14, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(16, 16, 16)
-                    .addComponent(botonAgregar)
-                    .addContainerGap(644, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,17 +216,14 @@ public class frmProducto extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(campoTextoIdProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
+                    .addComponent(campoTextoIdProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonAgregar))
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonCarrito)
-                    .addComponent(botonPedidos))
+                    .addComponent(botonPedidos)
+                    .addComponent(botonCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(274, Short.MAX_VALUE)
-                    .addComponent(botonAgregar)
-                    .addContainerGap()))
         );
 
         pack();
@@ -248,23 +251,27 @@ public class frmProducto extends javax.swing.JFrame {
      */
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
         Productos negocioProducto = new Productos();
-        
-        if (!campoTextoIdProducto.getText().trim().isEmpty()) {
-            Producto productoExistente = negocioProducto.obtenerProducto(Integer.parseInt(campoTextoIdProducto.getText()));
-            if(productoExistente != null){
-                carrito.getIdProducto().add(Integer.valueOf(campoTextoIdProducto.getText()));
+
+        String idProductoTexto = campoTextoIdProducto.getText().trim();
+        if (!idProductoTexto.isEmpty()) {
+            try {
+                int idProducto = Integer.parseInt(idProductoTexto);
+                Producto productoExistente = negocioProducto.obtenerProducto(idProducto);
+                if (productoExistente != null) {
+                    carrito.getIdProducto().add(idProducto);
+                    campoTextoIdProducto.setText("");
+                    JOptionPane.showMessageDialog(null, "Se agregó el producto al carrito con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    campoTextoIdProducto.setText("");
+                    JOptionPane.showMessageDialog(null, "Error: ese producto no existe", "Error ingreso de ID del producto", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException e) {
                 campoTextoIdProducto.setText("");
-                JOptionPane.showMessageDialog(null, "Se agrego el producto al carrito con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE); 
-            }else{
-                campoTextoIdProducto.setText("");
-                JOptionPane.showMessageDialog(null, "Error: ese producto no existe", "Error ingreso de id del producto", HEIGHT);
+                JOptionPane.showMessageDialog(null, "Error: el ID del producto debe ser un número entero", "Error ingreso de ID del producto", JOptionPane.ERROR_MESSAGE);
             }
-            
         } else {
-            JOptionPane.showMessageDialog(null, "Error: campos vacío, escribe un id de algún producto", "Error ingreso de id del producto", HEIGHT);
+            JOptionPane.showMessageDialog(null, "Error: campo vacío, escribe un ID de algún producto", "Error ingreso de ID del producto", JOptionPane.ERROR_MESSAGE);
         }
-
-
     }//GEN-LAST:event_botonAgregarActionPerformed
 
     /**
@@ -281,9 +288,11 @@ public class frmProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_botonPedidosActionPerformed
 
     /**
-     * Manejador de evento para el botón "Actualizar". se ejecuta cuando se hace cliic
-     * en el botón. Abre una nueva ventana para actualizar los datos del usuario.
-     * @param evt el evento de acción al dar clic en el botón actualizar datos 
+     * Manejador de evento para el botón "Actualizar". se ejecuta cuando se hace
+     * cliic en el botón. Abre una nueva ventana para actualizar los datos del
+     * usuario.
+     *
+     * @param evt el evento de acción al dar clic en el botón actualizar datos
      */
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
@@ -292,8 +301,10 @@ public class frmProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     /**
-     * Manejador de evento para el botón "Eliminar". se ejecuta cuando se hace cliic
-     * en el botón. Abre una nueva ventana para eliminar la cuenta del usuario.
+     * Manejador de evento para el botón "Eliminar". se ejecuta cuando se hace
+     * cliic en el botón. Abre una nueva ventana para eliminar la cuenta del
+     * usuario.
+     *
      * @param evt el evento de acción al dar clic en el botón eliminar
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -302,11 +313,18 @@ public class frmProducto extends javax.swing.JFrame {
         ventanaEliminar.setVisible(true);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void botonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarSesionActionPerformed
+        frmLogin login = new frmLogin();
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_botonCerrarSesionActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Usuario;
     private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonCarrito;
+    private javax.swing.JButton botonCerrarSesion;
     private javax.swing.JButton botonPedidos;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnEliminar;

@@ -1,13 +1,18 @@
-
 package Interfaz;
 
 import entidades.Usuario;
-import Interfaz.frmLogin;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import static java.awt.image.ImageObserver.HEIGHT;
-import negocio.Usuarios;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JLabel;
+import negocio.Usuarios;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 /**
  *
@@ -20,6 +25,43 @@ public class frmUsuario extends javax.swing.JFrame {
      */
     public frmUsuario() {
         initComponents();
+
+        // JLabel para mostrar mensaje de error al intentar ingresar valores
+        // Alfabeticos en el campo de telefono.
+        JLabel mensajeLabel = new JLabel("Solo ingrese numeros");
+        mensajeLabel.setForeground(Color.RED); // Establece el color de texto a rojo para que noten que es una advertencia
+        mensajeLabel.setBackground(Color.WHITE); // Establece el color de fondo a blanco
+        mensajeLabel.setOpaque(true); // Hace que el fondo sea opaco
+        mensajeLabel.setVisible(false); // Inicialmente el mensaje esta oculto
+        getContentPane().add(mensajeLabel);
+
+        // KeyListener para el campo de texto de telefono.
+        campoTextoTelefono.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    mensajeLabel.setVisible(true); // Muestra el mensaje
+                    Timer timer = new Timer(2000, new ActionListener() { // Configura un temporizador para ocultar el mensaje
+                        public void actionPerformed(ActionEvent e) {
+                            mensajeLabel.setVisible(false); // Oculta el mensaje
+                        }
+                    });
+                    timer.setRepeats(false); // Configura el temporizador para que solo se ejecute una vez
+                    timer.start();
+                    e.consume(); // Consume el evento para evitar que se agregue el caracter no numerico
+                }
+            }
+        });
+
+        // KeyListener para el campo de texto de nombre.
+        campoTextoNombre.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isLetter(c) && c != KeyEvent.VK_SPACE) {
+                    e.consume(); // Consume el evento para evitar que se agregue el caracter no permitido
+                }
+            }
+        });
     }
 
     /**
@@ -197,6 +239,13 @@ public class frmUsuario extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Error: campos vacíos, ingrese valores en los campos de texto", "Error de registro de usuario", HEIGHT);
 
             } else {
+                // Validacion del correo electronico
+                String email = campoTextoEmail.getText();
+                if (!isValidEmail(email)) {
+                    JOptionPane.showMessageDialog(null, "Error: El correo electronico ingresado no es valido", "Error de registro de usuario", HEIGHT);
+                    return;
+                }
+
                 if (usuarios.validarContrasena(usuarioNuevo.getContrasena())) {
                     usuarios.registrarUsuario(usuarioNuevo);
                     frmLogin loginVentana = new frmLogin();
@@ -209,11 +258,19 @@ public class frmUsuario extends javax.swing.JFrame {
                 }
 
             }
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error de registro de usuario", HEIGHT);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }//GEN-LAST:event_botonGuardarActionPerformed
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
 
     /**
      * Maneja el evento de clic en el botón "Vaciar". Este método limpia (borra)
@@ -246,8 +303,7 @@ public class frmUsuario extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnVolverActionPerformed
 
-    
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonGuardar;
     private javax.swing.JButton botonVaciar;

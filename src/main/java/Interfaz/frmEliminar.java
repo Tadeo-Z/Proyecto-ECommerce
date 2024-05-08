@@ -25,7 +25,14 @@ public class frmEliminar extends javax.swing.JFrame {
        
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         
-        
+    private String emailUsuarioActual = "";
+    public void setEmailUsuarioActual(String email) {
+    this.emailUsuarioActual = email;
+    }
+    private String obtenerEmailUsuarioActual() {
+    return this.emailUsuarioActual;
+    }   
+    
     }
     /**
      * Creates new form frmEliminar
@@ -153,32 +160,35 @@ public class frmEliminar extends javax.swing.JFrame {
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        try{
-             char[] contraseñaCaracteres = campoTextoContraseña.getPassword();
-             String contraseñaString = new String(contraseñaCaracteres);
-            Usuarios negocioUsuarios = new Usuarios();
+        try {
+        String emailUsuarioActual = obtenerEmailUsuarioActual(); // Suponiendo que tienes una función para obtener el email del usuario actualmente conectado
         
-            if (campoTextoEmail.getText().trim().isEmpty() || contraseñaString.trim().isEmpty() ) {
-                JOptionPane.showMessageDialog(null, "Error: campos vacíos, ingrese valores en los campos de texto", "Error de registro de usuario", HEIGHT);
-
-            } else {
-                this.usuario = negocioUsuarios.obtenerUsuario(campoTextoEmail.getText(), contraseñaString);
-                if(negocioUsuarios.eliminarUsuario(this.usuario)){
+        char[] contraseñaCaracteres = campoTextoContraseña.getPassword();
+        String contraseñaString = new String(contraseñaCaracteres);
+        Usuarios negocioUsuarios = new Usuarios();
+        
+        if (campoTextoEmail.getText().trim().isEmpty() || contraseñaString.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Error: campos vacíos, ingrese valores en los campos de texto", "Error de registro de usuario", HEIGHT);
+        } else {
+            Usuario usuarioEliminar = negocioUsuarios.obtenerUsuario(campoTextoEmail.getText(), contraseñaString);
+            if (usuarioEliminar != null && usuarioEliminar.getEmail().equals(emailUsuarioActual)) {
+                if (negocioUsuarios.eliminarUsuario(usuarioEliminar)) {
                     JOptionPane.showMessageDialog(null, "El usuario ha sido eliminado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     frmInicio ventanaInicio = new frmInicio();
                     this.ventanaProducto.dispose();
                     this.dispose();
-                 ventanaInicio.setVisible(true);
-                
-                }else{
-                    JOptionPane.showMessageDialog(null, "Error: Email o contraseña incorrecta", "Error de eliminación de usuario", HEIGHT);
+                    ventanaInicio.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error: No fue posible eliminar al usuario", "Error de eliminación de usuario", HEIGHT);
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: Solo puedes eliminar tu propia cuenta", "Error de eliminación de usuario", HEIGHT);
             }
-            
-            
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error: No fue posible eliminar al usuario", "Error de eliminación de usuario", HEIGHT);
         }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error: No fue posible eliminar al usuario", "Error de eliminación de usuario", HEIGHT);
+    }
+        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
